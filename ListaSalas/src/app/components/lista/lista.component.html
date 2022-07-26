@@ -1,0 +1,78 @@
+      <div class="container">
+        <h2>Federico Salas - Entregable nº 2 - Lista de alumnos</h2>
+        <hr>
+    <h3>A continuación se presenta solución al entregable de lista de alumnos con la utilización de directivas.</h3>        
+    <h3>Consideraciones:</h3>
+    <p>- El listado se ordena y calcula dinámicamente por <b>cantidad de éxamenes</b> de manera creciente.</p>
+    <p>- El mejor promedio del listado tiene una marca en su esquina superior izquierda realizado a través de *ngIf. </p>
+    <p>- Se utiliza ngStyle para cambiar el color de fondo de cada línea a través a través de un cálculo de gradientes, también dinámico. </p>
+    <p>- Para dar formato de letra en negrita en el mejor promedio, se utilizó ngClass contra el método TS mejorPromedio(alumno). </p>
+    <p>- Por último se utilizó el pipe number para formatear el promedio de los alumnos en 2 decimales.</p>
+    <p><b>- Databinding: El sitio permite agregar nuevos alumnos para introducirlos en el orden que corresponda.</b></p>
+
+        <hr>
+        <h3>Nuevo alumno</h3>
+        <div class="row well ">
+        <div class="col-sm-3">
+            <label class="form-label">Apellido</label>
+            <input type="text" class="form-control" [(ngModel)]="apellidoAlumno">
+        </div>           
+        <div class="col-sm-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="nombreAlumno">
+        </div>        
+        <div class="col-sm-3">
+            <label class="form-label">Suma de notas</label>
+            <input type="number" class="form-control" [(ngModel)]="puntajeAlumno">
+        </div>   
+        <div class="col-sm-3">
+            <label class="form-label">Cant. éxamenes</label>
+            <input type="number" class="form-control" [(ngModel)]="examenesAlumno">
+        </div>   
+        </div>               
+
+        <div style="text-align: right;">        
+            <button class="boton btn btn-primary" type="button" (click)="agregarAlumno()">Agregar alumno</button>
+        </div>
+        <hr>
+
+        <h3>Otras opciones</h3>
+        <div class="row well"> 
+            <div class="col-sm-3" style="text-align: center">
+                <button class="btn btn-success" type="button" (click)="agregarAleatorios()">Agregar 10 alumnos aleatorios</button>            
+            </div>  
+            <div class="col-sm-3" style="text-align: center">
+                <button class="btn btn-warning" type="button" (click)="cambiarColores()">Cambiar color de la lista</button>                        
+            </div>
+            <div class="col-sm-3" style="text-align: center">
+                <button class="btn btn-danger" type="button" (click)="borrarAlumno()">Borrar alumnos seleccionados</button>        
+            </div>
+            <div class="col-sm-3" style="text-align: center">
+                <button class="btn btn-danger" style="background-color: black;" type="button" (click)="borrarTodos()">Borrar todo</button>        
+            </div>            
+        </div>
+
+
+        <hr>
+
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">#</div>
+            <div class="col col-2">Nombre y Apellido</div>
+            <div class="col col-3">Suma de notas</div>
+            <div class="col col-4">Cant. Exámenes</div>            
+            <div class="col col-5">Promedio</div>            
+          </li>
+          <li class="table-row" [ngClass]="mejorPromedio(alumno) ? alumno.seleccionado ? 'mejorPromedio seleccionado' : 'mejorPromedio' : alumno.seleccionado ? 'seleccionado' : ''"                                                                   
+                                [ngStyle]="{'background':getColor(alumno)}"
+                                (click)="seleccionar(alumno)" 
+                                *ngFor="let alumno of alumnos">
+            <div class="ribbon" *ngIf="mejorPromedio(alumno)">TOP</div>        
+            <div class="col col-1" data-label="Posición">{{ alumno.posicion}} </div>
+            <div class="col col-2" data-label="Nombre y apellido">{{ alumno.apellido + ', ' + alumno.nombre}} </div>
+            <div class="col col-3" data-label="Suma de notas">{{ alumno.puntaje}} </div>
+            <div class="col col-4" data-label="Cant. Exámenes">{{ alumno.examenes }}   </div>
+            <div class="col col-5" data-label="Promedio">{{ alumno.puntaje / alumno.examenes | number: '0.2-2' }}     </div>
+          </li>    
+        </ul>
+      </div>
