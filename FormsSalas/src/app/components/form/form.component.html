@@ -1,15 +1,11 @@
 <div class="container">
-    <h2>Federico Salas - Entregable nº 2 - Lista de alumnos</h2>
-    <hr>
-<h3>A continuación se presenta solución al entregable de lista de alumnos con la utilización de directivas.</h3>        
-<h3>Consideraciones:</h3>
-<p>- El listado se ordena y calcula dinámicamente por <b>cantidad de éxamenes</b> de manera creciente.</p>
-<p>- El mejor promedio del listado tiene una marca en su esquina superior izquierda realizado a través de *ngIf. </p>
-<p>- Se utiliza ngStyle para cambiar el color de fondo de cada línea a través a través de un cálculo de gradientes, también dinámico. </p>
-<p>- Para dar formato de letra en negrita en el mejor promedio, se utilizó ngClass contra el método TS mejorPromedio(alumno). </p>
-<p>- Por último se utilizó el pipe number para formatear el promedio de los alumnos en 2 decimales.</p>
-<p><b>- Databinding: El sitio permite agregar nuevos alumnos para introducirlos en el orden que corresponda.</b></p>
-
+    <h2>Federico Salas - Entregable nº 3 - Reactive Forms</h2>
+    <hr>            
+      <h3>A continuación se presenta solución al entregable de Reactive Forms con uso de validaciones.</h3>        
+      <h3>Consideraciones:</h3>
+      <p>- Se agregaron validaciones del tipo "required" y "pattern" para valores numéricos.</p>
+      <p>- Además es puede activar/desactivar una <b>validación personalizada</b> al agregar un alumno. Al momento de agregar un alumno, se deberá indicar el resultado de multiplicar los valores de puntaje y examen.</p>
+      <p>- Los validadores solo muestran mensaje una vez editados el campo en cuestión. También realizan comprobación al dar submit o aceptar.</p>
     <hr>
     
     <h3>Opciones</h3>
@@ -75,28 +71,61 @@
                 </app-field-error-display-component>
             </div>    
           </div>     
-          <div class="col-sm-12">
-              <label class="form-label" >Nombre</label>
-              <input type="text" class="form-control" formControlName="nombre" >
-              <p *ngIf="formulario.get('nombre')?.errors?.['required']">Este campo es obligatorio</p>
-          </div>        
-          <div class="col-sm-12">
-              <label class="form-label">Suma de notas</label>
-              <input type="number" class="form-control" formControlName="puntaje" >
-              <p *ngIf="formulario.get('puntaje')?.errors?.['required']">Este campo es obligatorio</p>
+
+          <div class="form-group" [ngClass]="displayFieldCss('nombre')">
+            <div class="col-sm-12">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" >
+                <app-field-error-display-component [displayError]="isFieldValid('nombre')" errorMsg="Por favor informar nombre">
+                </app-field-error-display-component>
+            </div>    
           </div>   
-          <div class="col-sm-12">
-              <label class="form-label">Cant. éxamenes</label>
-              <input type="number" class="form-control" formControlName="examenes" >
-              <p *ngIf="formulario.get('examenes')?.errors?.['required']">Este campo es obligatorio</p>
-          </div>   
-          </div>           
-          <div style="text-align: right; margin-top:20px">        
-            <button class="boton btn btn-primary" type="button" (click)="agregarAlumno()">Aceptar</button>
-            <button class="boton btn btn-danger" type="button" (click)="mostrarModal()">Cerrar</button>
-            <button type="submit" [disabled]="!formulario.valid">Enviar</button>
-          </div>             
+
           
+          <div class="form-group" [ngClass]="displayFieldCss('puntaje')">
+            <div class="col-sm-12">
+                <label class="form-label">Suma de notas</label>
+                <input type="text" class="form-control" formControlName="puntaje" >
+                <app-field-error-display-component [displayError]="isFieldValid('puntaje')" errorMsg="Por favor informar puntaje">
+                </app-field-error-display-component>
+            </div>    
+          </div>        
+          
+          <div class="form-group" [ngClass]="displayFieldCss('examenes')">
+            <div class="col-sm-12">
+                <label class="form-label">Cantidad de exámenes</label>
+                <input type="text" class="form-control" formControlName="examenes" >
+                <app-field-error-display-component [displayError]="isFieldValid('examenes')" errorMsg= "Por favor informar cantidad de exámenes">
+                </app-field-error-display-component>
+                <app-field-error-display-component [displayError]="revisarPromedio()" errorMsg="El promedio da mayor a 10, debe revisar puntuación o cantidad de exámenes.">
+                </app-field-error-display-component>                
+            </div>    
+          </div>      
+          
+          <div class="form-group" >
+            <div class="col-sm-12" style="margin-top:10px !important; margin-bottom: 10px !important;">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" formControlName="validarCb" #checkBox checked />
+                <label class="form-check-label" style="margin-left:8px !important;">Validación personalizada</label>
+              </div>
+            </div>    
+          </div> 
+
+          <div *ngIf="checkBox.checked" class="form-group" [ngClass]="displayFieldCss('validacion')">
+            <div class="col-sm-12">
+                <label class="form-label">Validación personalizada: Multiplicar exámenes X puntaje</label>
+                <input type="text" class="form-control" formControlName="validacion" >
+                <app-field-error-display-component [displayError]="isFieldValid('validacion')" errorMsg= "Resultado incorrecto: multiplicar exámenes X puntaje">
+                </app-field-error-display-component>
+            </div>    
+          </div>               
+     
+          
+          <div style="text-align: right; margin-top:20px;margin-right: 30px;">        
+            <button class="boton btn btn-primary" type="button" (click)="agregarAlumno()">Aceptar</button>
+            <button class="boton btn btn-danger" type="button" (click)="mostrarModal()">Cerrar</button>            
+          </div>             
+        </div>
       </div>
       
     </div>

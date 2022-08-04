@@ -1,6 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators, AbstractControl } from '@angular/forms';
 
+
+function calcularValidacion(c: FormControl) {
+
+  if (c.parent?.get('validarCb')?.value  == false)
+  {      
+    return null;
+  }
+
+  if (c.parent?.get('examenes')?.value * c.parent?.get('puntaje')?.value  == c.parent?.get('validacion')?.value)
+  {    
+    return null;
+  }
+  else
+  {
+    return  {
+      validacionOperacion: false        
+    };
+  }
+  
+
+}
 
 export class Alumnno
 {
@@ -8,7 +29,7 @@ export class Alumnno
   apellido: string = "";
   puntaje: number = 0;
   examenes:  number = 0;
-  posicion:  number = 0;
+  posicion:  number = 0;  
   seleccionado: boolean= false;
 }
 
@@ -37,16 +58,14 @@ export class FormComponent implements OnInit {
     this.formulario = this.fb.group({
       nombre: new FormControl('',[Validators.required]),
       apellido: new FormControl('',[Validators.required]),
-      puntaje: new FormControl('',[Validators.required]),
-      examenes: new FormControl('',[Validators.required])
+      puntaje: new FormControl('',[Validators.required , Validators.pattern("^[0-9]*$")]),
+      examenes: new FormControl('',[Validators.required, Validators.pattern("^[0-9]*$") ]),
+      validarCb : new FormControl(true),
+      validacion: new FormControl('',[Validators.required,  calcularValidacion])      
     })
 
   }
 
-
-  
-
- 
 
   contador: number = 0;
   indiceColores = 0;
@@ -55,7 +74,7 @@ export class FormComponent implements OnInit {
   puntaje2: number = Math.round(Math.random() * 100);
   puntaje3: number = Math.round(Math.random() * 100);
 
-  showModalBox: boolean = false;
+  showModalBox: boolean = true;
 
 
   /* Array para cambiar colores del listado */
@@ -86,7 +105,6 @@ getColor(persona: any) {
 
 public mostrarModal() {
 
-  this.reset();
   if(this.showModalBox == false){
     this.showModalBox = true;
   } else {
@@ -151,38 +169,18 @@ public seleccionar(alumno: any) : void
 /* Agrega alumno según datos en input forms */
 public agregarAlumno() : void
 {
-/*
-  if (this.apellidoAlumno == "")
-{
-  alert("Debe completar el apellido del alumno.");
-  return;
-}
-  
-if (this.nombreAlumno == "")
-{
-  alert("Debe completar el nombre del alumno.");
-  return;
-}
 
-if (this.puntajeAlumno == 0)
-{
-  alert("Debe completar el puntaje del alumno.");
-  return;
-}
+  this.validateAllFormFields(this.formulario);
 
-if (this.examenesAlumno == 0)
-{
-  alert("Debe completar la cantidad de exámenes del alumno.");
-  return;
-}
+  if (this.formulario.get('validarCb')?.value == false)
+  {
+    this.formulario.get('validacion')?.setValue("0");
+  }
 
-if (this.puntajeAlumno / this.examenesAlumno > 10)
-{
-  alert("El promedio da mayor a 10, debe revisar puntuación o cantidad de exámenes." + this.puntajeAlumno + " - " + this.examenesAlumno);
-  return;
-}*/
-
-/* Inicialización de objeto */
+  if (this.formulario.valid == false || this.revisarPromedio() == true)
+  {
+    return;
+  }
 
 
 
@@ -191,6 +189,8 @@ if (this.puntajeAlumno / this.examenesAlumno > 10)
     apellido:  this.formulario.get('apellido')?.value,
     puntaje:  this.formulario.get('puntaje')?.value,
     examenes:  this.formulario.get('examenes')?.value,
+    validarCb: true,
+    validacion:  this.formulario.get('validacion')?.value,
     posicion: 0,
     seleccionado: false
   };
@@ -229,8 +229,9 @@ if (this.puntajeAlumno / this.examenesAlumno > 10)
   }
 
   /* Se limpian variables del input */
-    this.formulario.setValue({nombre: '', apellido: '', puntaje : 0, examenes : 0});
-    this.mostrarModal();
+  this.reset();  
+
+  this.mostrarModal();
 }
 
 /* Obtiene un valor aleatorio dentro de un rango mínimo y máximo */
@@ -254,9 +255,6 @@ public mejorPromedio(alumno: any) : boolean
 
   isFieldValid(field: string) {
 
-    console.log(this.formulario);
-    console.log(field);
-    console.log(this.formulario!.get(field)!.valid && this.formulario!.get(field)!.touched);
     return  ! this.formulario!.get(field)!.valid && this.formulario!.get(field)!.touched;
     
   }
@@ -270,6 +268,33 @@ public mejorPromedio(alumno: any) : boolean
 
   reset(){
     this.formulario.reset();
+    this.formulario.get('validarCb')?.setValue(true);
   }  
+
+  revisarPromedio(){
+    if (this.formulario.get('examenes')?.valid && this.formulario.get('puntaje')?.valid)
+    {
+      if (this.formulario.get('puntaje')?.value / this.formulario.get('examenes')?.value > 10)
+      {      
+        return true;
+      } 
+    }
+    return false;
+  }
+
+
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {      
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }  
+
+
 
 }
