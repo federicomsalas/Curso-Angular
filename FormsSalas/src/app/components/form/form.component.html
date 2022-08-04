@@ -27,7 +27,7 @@
 
     <hr>
 
-    <ul class="responsive-table">
+    <ul *ngIf="this.alumnos ? this.alumnos.length > 0 : ''"  class="responsive-table">
       <li class="table-header">
         <div class="col col-1">#</div>
         <div class="col col-2">Nombre y Apellido</div>
