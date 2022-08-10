@@ -34,11 +34,11 @@ export class EditarDialogComponent implements OnInit {
   }
 
   actualizar(){
-
+    this.dialogRef.close(this.formulario.value);
   }
 
   cerrar(){
-    
+    this.dialogRef.close();
   }
 
 }
