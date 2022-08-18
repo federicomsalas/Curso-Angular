@@ -1,0 +1,69 @@
+<h1 mat-dialog-title>{{ data.modo }} de alumno</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formulario">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Apellido</mat-label>
+                <input formControlName="apellido" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('apellido')?.touched && formulario.get('apellido')?.errors?.['required']">Este campo es obligatorio</p>
+
+        </div>
+
+        <div class="col-sm-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombre" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('nombre')?.touched && formulario.get('nombre')?.errors?.['required']">Este campo es obligatorio</p>
+        </div>        
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <mat-form-field appearance="fill"  style="width: 100%">
+                <mat-label>E-mail</mat-label>
+                <input formControlName="mail" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('mail')?.touched && formulario.get('mail')?.errors?.['required']">Este campo es obligatorio</p>
+            <p *ngIf="formulario.get('mail')?.touched && formulario.get('mail')?.errors?.['email']">Formato de E-Mail inválido</p>
+        </div>        
+
+    </div>    
+
+    <div class="row">
+        
+        <div class="col-sm-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Edad</mat-label>
+                <input formControlName="edad" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('edad')?.touched && formulario.get('edad')?.errors?.['required']">Este campo es obligatorio</p>
+            <p *ngIf="formulario.get('edad')?.touched && formulario.get('edad')?.errors?.['min']">Debe ser mayor a cero</p>            
+            <p *ngIf="formulario.get('edad')?.touched && formulario.get('edad')?.errors?.['pattern']">Ingresar sólo números</p>            
+        </div>
+
+        <div class="col-sm-6">
+        <mat-form-field appearance="fill">
+            <mat-label>Género</mat-label>            
+            <select matNativeControl formControlName="genero">
+                <option value="0">Mujer</option>
+                <option value="1">Hombre</option>
+                <option value="2">Otro</option>
+              </select>          
+        </mat-form-field>
+        <p *ngIf="formulario.get('genero')?.touched && formulario.get('genero')?.errors?.['required']">Este campo es obligatorio</p>
+    </div>
+    
+
+    </div>        
+    </form>
+</div>
+<div mat-dialog-actions style="display:block; text-align:right">
+    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="actualizar()">Aceptar</button>
+    <button mat-raised-button color="warn"  (click)="cerrar()">Cerrar</button>    
+</div>

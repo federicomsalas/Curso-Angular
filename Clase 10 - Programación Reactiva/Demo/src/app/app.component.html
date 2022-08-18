@@ -1,0 +1,7 @@
+<pre>Cursos: {{ cursos | json }}</pre>
+
+<pre>Profesores: {{ profesores | json }}</pre>
+
+<button (click)="agregarNuevoProfesor()" >Agregar</button>
+
+<pre>Observable de cursos {{ cursos$ | async | json }}</pre>
