@@ -4,26 +4,6 @@ import { ServicioAlumnosService } from '../../services/servicio-alumnos.service'
 import { interval, map, mergeMap, Observable, timer, tap, Subject, Subscription, filter, takeUntil } from 'rxjs';
 
 
-function calcularValidacion(c: FormControl) {
-
-  if (c.parent?.get('validarCb')?.value  == false)
-  {      
-    return null;
-  }
-
-  if (c.parent?.get('examenes')?.value * c.parent?.get('puntaje')?.value  == c.parent?.get('validacion')?.value)
-  {    
-    return null;
-  }
-  else
-  {
-    return  {
-      validacionOperacion: false        
-    };
-  }
-  
-
-}
 
 export class Alumnno
 {
@@ -43,63 +23,48 @@ export class Alumnno
 export class FormComponent implements OnInit, OnDestroy {
 
   alumnos: any = [];
-  subject = new Subject();
-  suscription = new Subscription();
+  recargaSubject = new Subject();
+  suscripcionAlumnos = new Subscription();
   timer$: Subscription;
   cantidadRepeticiones$!: Observable<any>;
   alumnoMejorPromedio: any;
   valorPromedio: any = "?";
   totalAlumnos: number = 0;
   filtrar: string = "0";
-  timerAlumnos?: Observable<any>;
+  timerAlumnos: Observable<any>;
 
   constructor(
 
-    private fb: FormBuilder,
     private servicioAlumnoService: ServicioAlumnosService
   ) {     
 
-    console.log("constr FORM");
+    /* Cantidad de repeticiones Async*/
+    this.cantidadRepeticiones$ = this.servicioAlumnoService.obtenerObservableCantidadRepeticiones(); 
 
-    //servicioAlumnoService = new ServicioAlumnosService();
-
+    /* Timer recarga */
     this.timer$ = timer(0, 1000).subscribe(value => {      
-      this.subject.next( (10-(Math.abs(value*1000) % 10000  / 1000)).toFixed(0).toString()  ) ;     
+      this.recargaSubject.next( (10-(Math.abs(value*1000) % 10000  / 1000)).toFixed(0).toString()  ) ;     
     });
 
   
-
+    let controlRepeticiones = true;
+    
     this.timerAlumnos = timer(0,10000);
 
-    this.suscription =  this.timerAlumnos
+    /* Observable Alumnos*/
+    this.suscripcionAlumnos =  this.timerAlumnos
     .pipe(
-        mergeMap((alumnos) => this.servicioAlumnoService.obtenerObservableAlumnos())
+        mergeMap((alumnos) => this.servicioAlumnoService.obtenerObservableAlumnos(controlRepeticiones))
         , tap( alumnos => this.totalAlumnos = alumnos.length )    
         ,map((alumnos: any[]) => alumnos.filter(alumno => alumno.puntaje / alumno.examenes > parseInt(this.filtrar || "0")))   
     )
     .subscribe(alumnos => this.alumnos = alumnos);
 
-    
-    this.cantidadRepeticiones$ = this.servicioAlumnoService.obtenerObservableCantidadRepeticiones(); 
-
-    /*
-    timer(0,10000)
-    .pipe(
-        mergeMap((alumnos) => this.servicioAlumnoService.obtenerObservableAlumnos())
-        , tap( alumnos => this.totalAlumnos = alumnos.length )    
-        ,map((alumnos: any[]) => alumnos.filter(alumno => alumno.puntaje / alumno.examenes > parseInt(this.filtrar || "0")))   
-    )
-    .subscribe(alumnos => this.alumnos = alumnos)
-    */
+    setTimeout(() => controlRepeticiones = false, 1000);
     
   }
 
-
-
   ngOnInit(): void {
-
-
-
 
   }
 
@@ -132,8 +97,6 @@ getColor(persona: any) {
 }
 
 
-
-
 /* Marca/Desmarca un alumno como seleccionado */
 public seleccionar(alumno: any) : void
 {
@@ -160,7 +123,6 @@ public mejorPromedio(alumno: any) : boolean
     this.servicioAlumnoService.obtenerPromisePromedios()
     .then(
       (valorPromedio) => {
-        console.log("Promise: " , valorPromedio);
         this.valorPromedio = valorPromedio;
       }
     )
@@ -170,11 +132,9 @@ public mejorPromedio(alumno: any) : boolean
       }
     )
   }
-  ngOnDestroy(): void {
-  //  this.subject.unsubscribe();      
+  ngOnDestroy(): void {    
       this.timer$.unsubscribe();
-      this.suscription.unsubscribe();
-      
+      this.suscripcionAlumnos.unsubscribe();      
   }
 
 }

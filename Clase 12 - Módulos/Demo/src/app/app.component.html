@@ -1,0 +1,20 @@
+<a routerLink="/inicio">Inicio</a><br>
+<a routerLink="/cursos/lista">Cursos</a><br>
+<hr>
+
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Demostración Módulos</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon" >
+        <mat-icon routerLink="/inicio">school</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" >
+        <mat-icon routerLink="/cursos/lista">school</mat-icon>
+    </button>                      
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+
+<router-outlet></router-outlet>
