@@ -32,8 +32,7 @@ export class InscripcionesComponent implements OnInit {
     this.inscripcionesService.obtenerObservableInscripciones().subscribe((inscripciones) => 
     {
       ELEMENT_DATA_INSCRIPCIONES = inscripciones;
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA_INSCRIPCIONES); 
-      console.log(ELEMENT_DATA_INSCRIPCIONES);
+      this.dataSource = new MatTableDataSource(ELEMENT_DATA_INSCRIPCIONES);     
     });    
 
   }
@@ -56,17 +55,14 @@ export class InscripcionesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(resultado => {
       if (resultado)
       {
-        console.log(resultado);
-        this.inscripcionesService.agregarInscripcion(resultado);    
-        
+        this.inscripcionesService.agregarInscripcion(resultado);            
         try{
           this.tabla.renderRows();       
         }
         catch
         {
-        }
-
-        
+          
+        }        
       }
     })    
 
