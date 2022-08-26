@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BorrarInscripcionComponent } from '../borrar-inscripcion/borrar-inscripcion.component';
 import { Curso } from 'src/app/models/curso';
 import { Alumno } from 'src/app/models/alumno';
+import { UtilsService } from '../../../../shared/utils/utils.service';
 
 
 let ELEMENT_DATA_INSCRIPCIONES: Inscripcion[] = [];
@@ -14,7 +15,7 @@ let ELEMENT_DATA_INSCRIPCIONES: Inscripcion[] = [];
 @Component({
   selector: 'app-inscripciones',
   templateUrl: './inscripciones.component.html',
-  styleUrls: ['./inscripciones.component.css']
+  styleUrls: ['./inscripciones.component.css','../../../../shared/css/content.css']
 })
 export class InscripcionesComponent implements OnInit {
 
@@ -24,7 +25,8 @@ export class InscripcionesComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private inscripcionesService: InscripcionesService
+    private inscripcionesService: InscripcionesService,
+    private utilsService: UtilsService
   ) { 
 
     this.inscripcionesService.obtenerObservableInscripciones().subscribe((inscripciones) => 
@@ -44,7 +46,7 @@ export class InscripcionesComponent implements OnInit {
 
     const curso: Curso = {id: '', descripcion: '', profesor: '', cargaHoraria: ''};
     const alumno: Alumno = {id: '',nombre: '', apellido: '', mail: '', edad: '', genero: ''};
-    const inscripcion: Inscripcion = {id: this.makeid(), curso : curso , alumno : alumno };
+    const inscripcion: Inscripcion = {id: this.utilsService.makeid(), curso : curso , alumno : alumno };
 
     const dialogRef = this.dialog.open(EditarInscripcionComponent, {
       width: '400px',
@@ -87,15 +89,6 @@ export class InscripcionesComponent implements OnInit {
     })    
   }
 
-    makeid() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    
-      for (var i = 0; i < 8; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    
-      return text;
-    }    
- 
+
 
 }

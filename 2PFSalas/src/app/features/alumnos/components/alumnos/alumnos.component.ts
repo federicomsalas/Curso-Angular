@@ -5,6 +5,7 @@ import { Alumno } from '../../../../models/alumno';
 import { AlumnosService } from '../../services/alumnos.service';
 import { BorrarAlumnoComponent } from '../borrar-alumno/borrar-alumno.component';
 import { EditarAlumnoComponent } from '../editar-alumno/editar-alumno.component';
+import { UtilsService } from '../../../../shared/utils/utils.service';
 
 
 
@@ -13,7 +14,7 @@ let ELEMENT_DATA: Alumno[] = [];
 @Component({
   selector: 'app-alumnos',
   templateUrl: './alumnos.component.html',
-  styleUrls: ['./alumnos.component.css']
+  styleUrls: ['./alumnos.component.css','../../../../shared/css/content.css']
 })
 export class AlumnosComponent implements OnInit {
 
@@ -23,7 +24,8 @@ export class AlumnosComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private alumnosService: AlumnosService
+    private alumnosService: AlumnosService,
+    private utilsService: UtilsService
   ) { 
 
     this.alumnosService.obtenerObservableAlumnos().subscribe((alumnos) => 
@@ -45,7 +47,7 @@ export class AlumnosComponent implements OnInit {
 
   agregarAlumno(){
 
-    const alumno: Alumno = {id: this.makeid() ,nombre: '', apellido: '', mail: '', edad: '', genero: ''};
+    const alumno: Alumno = {id: this.utilsService.makeid() ,nombre: '', apellido: '', mail: '', edad: '', genero: ''};
 
     const dialogRef = this.dialog.open(EditarAlumnoComponent, {
       width: 'auto',
@@ -96,20 +98,5 @@ export class AlumnosComponent implements OnInit {
   }
 
 
-
-
-    makeid() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    
-      for (var i = 0; i < 8; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    
-      return text;
-    }    
-
-    grabarLocalStorage(){
-      localStorage.setItem('TABLA_ALUMNOS', JSON.stringify(this.dataSource.data));    
-    }      
 
 }

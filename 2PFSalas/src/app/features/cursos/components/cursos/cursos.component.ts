@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CursosService } from '../../services/cursos.service';
 import { EditarCursoComponent } from '../editar-curso/editar-curso.component';
 import { BorrarCursoComponent } from '../borrar-curso/borrar-curso.component';
+import { UtilsService } from '../../../../shared/utils/utils.service';
 
 
 let ELEMENT_DATA_CURSOS: Curso[] = [];
@@ -12,7 +13,7 @@ let ELEMENT_DATA_CURSOS: Curso[] = [];
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
-  styleUrls: ['./cursos.component.css']
+  styleUrls: ['./cursos.component.css','../../../../shared/css/content.css']
 })
 export class CursosComponent implements OnInit {
 
@@ -22,7 +23,8 @@ export class CursosComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private cursosService: CursosService
+    private cursosService: CursosService,
+    private utilsService: UtilsService
   ) { 
 
     this.cursosService.obtenerObservableCursos().subscribe((cursos) => 
@@ -39,7 +41,7 @@ export class CursosComponent implements OnInit {
 
   agregarCurso(){
 
-    const curso: Curso = {id: this.makeid(), descripcion: '', profesor: '', cargaHoraria: ''};
+    const curso: Curso = {id: this.utilsService.makeid(), descripcion: '', profesor: '', cargaHoraria: ''};
 
     const dialogRef = this.dialog.open(EditarCursoComponent, {
       width: 'auto',
@@ -88,15 +90,6 @@ export class CursosComponent implements OnInit {
     })    
   }
 
-    makeid() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    
-      for (var i = 0; i < 8; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    
-      return text;
-    }    
  
 
 }
