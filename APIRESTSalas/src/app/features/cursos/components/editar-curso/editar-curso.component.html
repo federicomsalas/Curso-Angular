@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>{{ data.modo }} de curso</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formulario">
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <mat-form-field appearance="fill" style="width:100%">
+                <mat-label>Descripción</mat-label>
+                <input formControlName="descripcion" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.errors?.['required']">Este campo es obligatorio</p>
+        </div>        
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-sm-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Profesor</mat-label>
+                <input formControlName="profesor" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('profesor')?.touched && formulario.get('profesor')?.errors?.['required']">Este campo es obligatorio</p>
+        </div>  
+
+        <div class="col-sm-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Carga horaria</mat-label>
+                <input formControlName="cargaHoraria" matInput>
+            </mat-form-field>
+            <p *ngIf="formulario.get('cargaHoraria')?.touched && formulario.get('cargaHoraria')?.errors?.['required']">Este campo es obligatorio</p>
+        </div>       
+
+    </div>    
+
+     
+    </form>
+</div>
+<div mat-dialog-actions style="display:block; text-align:right">
+    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="actualizar()">Aceptar</button>
+    <button mat-raised-button color="warn"  (click)="cerrar()">Cerrar</button>    
+</div>

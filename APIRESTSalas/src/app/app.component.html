@@ -1,0 +1,10 @@
+<div *ngIf="authService.obtenerSesion() | async; else noConnect">    
+    <app-toolbar></app-toolbar>
+    <app-navbar></app-navbar>    
+    <router-outlet></router-outlet>
+  </div>
+  <ng-template #noConnect>
+    <app-login></app-login>
+  </ng-template>
+  
+
