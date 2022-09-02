@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
+import { Observable } from 'rxjs';
+import { Usuario } from '../../../models/usuario';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +11,12 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  usuario$?: Observable<Usuario>;
   constructor(
     private _renderer2: Renderer2, 
     @Inject(DOCUMENT) private _document: Document,
     private authService: AuthService
+    
   ) { }
 
   public ngOnInit() {
@@ -23,6 +27,8 @@ export class NavbarComponent implements OnInit {
   
     this._renderer2.appendChild(this._document.body, script_hero);
 
+    this.usuario$ = this.authService.obtenerSesion();
+    console.log(this.usuario$);
   }
 
   cerrarSesion()
