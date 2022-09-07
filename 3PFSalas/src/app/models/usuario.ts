@@ -2,7 +2,7 @@ export interface Usuario {
     id:string;
     usuario: string;
     contrasena: string;
-    admin: boolean;
+    admin: string;
     nombre: string;
     apellido: string;
   }

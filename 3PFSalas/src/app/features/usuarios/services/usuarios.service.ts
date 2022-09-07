@@ -22,11 +22,11 @@ export class UsuariosService {
   }   
 
   agregarUsuario(usuario: Usuario){
-    return this.http.post<Usuario>(`${this.api}/alumnos`, usuario);
+    return this.http.post<Usuario>(`${this.api}/usuarios`, usuario);
    }    
 
    editarUsuario(usuario: Usuario){
-    return this.http.put<Usuario>(`${this.api}/alumnos/${usuario.id}`,usuario);
+    return this.http.put<Usuario>(`${this.api}/usuarios/${usuario.id}`,usuario);
    }    
 
 

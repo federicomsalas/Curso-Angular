@@ -18,7 +18,7 @@ export class EditarUsuarioComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {
-      //dialogRef.disableClose = true;    
+      dialogRef.disableClose = true;    
       this.formulario = fb.group(
         {
           id: new FormControl(data.usuario.id),

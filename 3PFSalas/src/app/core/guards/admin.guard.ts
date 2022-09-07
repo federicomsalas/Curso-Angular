@@ -22,7 +22,7 @@ export class AdminGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authService.obtenerSesion().pipe(
       map((sesion: Usuario) => {
-        if(sesion.admin){        
+        if(sesion.admin == "1"){        
           return true;
         }else{          
           alert("No tiene permisos");

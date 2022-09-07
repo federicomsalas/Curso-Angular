@@ -42,7 +42,7 @@
         <div *ngFor="let usuario of usuarios$ | async">          
           <h2>Usuario: {{usuario.usuario}}</h2>
           <h3>Contraseña: {{usuario.contrasena}}</h3>
-          <h3>Admin: {{usuario.admin}}</h3>
+          <h3>Admin: {{usuario.admin | admin}}</h3>
         </div>
       </mat-card-content>
     </mat-card>

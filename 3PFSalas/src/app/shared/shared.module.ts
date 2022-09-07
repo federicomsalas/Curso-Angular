@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { ConcatenarPipe } from './pipes/concatenar.pipe';
 import { GeneroPipe } from './pipes/genero.pipe';
 import { TitulosDirective } from './directives/titulos.directive';
+import { AdminPipe } from './pipes/admin.pipe';
 
 
 
@@ -14,6 +15,7 @@ import { TitulosDirective } from './directives/titulos.directive';
   declarations: [    
     ConcatenarPipe,
     GeneroPipe,
+    AdminPipe,
     TitulosDirective],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { TitulosDirective } from './directives/titulos.directive';
     ReactiveFormsModule, 
     ConcatenarPipe,
     GeneroPipe,
+    AdminPipe,
     TitulosDirective
   ]
 })

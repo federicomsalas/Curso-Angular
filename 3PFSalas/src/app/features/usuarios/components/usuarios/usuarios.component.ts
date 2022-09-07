@@ -36,7 +36,7 @@ export class UsuariosComponent implements OnInit {
 
   agregarUsuario(){
 
-    const usuario: Usuario = {id: this.utilsService.makeid(), usuario: '', contrasena: '', admin: false, nombre: '', apellido : '' };
+    const usuario: Usuario = {id: this.utilsService.makeid(), usuario: '', contrasena: '', admin: '0', nombre: '', apellido : '' };
 
     const dialogRef = this.dialog.open(EditarUsuarioComponent, {
       width: 'auto',

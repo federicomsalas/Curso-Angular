@@ -9,7 +9,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('Pruebas unitarias para CursosComponent', () => {
+describe('CursosComponents - Tests Unitarios', () => {
   let component: CursosComponent;
   let fixture: ComponentFixture<CursosComponent>;
   let httpClientSpy: { get: jasmine.Spy };

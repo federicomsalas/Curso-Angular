@@ -8,7 +8,8 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Lista de Cursos</h2>
+          <h2>Lista de Usuarios</h2>
+          <h3>Nota: No se permite borrar usuarios para no quedar sin usuarios administradores.</h3>
         </div>
         <br>
 
@@ -20,33 +21,33 @@
         
         <table mat-table [dataSource]="usuarios$"   class="mat-elevation-z8" style="width:100%">
             <ng-container matColumnDef="usuario">
-              <th appTitulos mat-header-cell *matHeaderCellDef  width="18%" >Usuario</th>
+              <th appTitulos mat-header-cell *matHeaderCellDef  width="20%" >Usuario</th>
                <td mat-cell *matCellDef="let element">{{ element.usuario  }}</td>
              </ng-container>  
       
       
              <ng-container matColumnDef="contrasena">
-              <th appTitulos mat-header-cell *matHeaderCellDef  width="18%">Contraseña</th>
+              <th appTitulos mat-header-cell *matHeaderCellDef  width="20%">Contraseña</th>
               <td mat-cell *matCellDef="let element">{{ element.contrasena }}</td>
              </ng-container>   
 
              <ng-container matColumnDef="admin">
-              <th style="text-align: right" appTitulos mat-header-cell *matHeaderCellDef  width="18%">Admin</th>
-              <td style="text-align: right" mat-cell *matCellDef="let element">{{ element.admin }}</td>
+              <th style="text-align: center" appTitulos mat-header-cell *matHeaderCellDef  width="10%">Admin</th>
+              <td style="text-align: center" mat-cell *matCellDef="let element">{{ element.admin | admin }}</td>
              </ng-container>   
 
              <ng-container matColumnDef="nombre">
-                <th style="text-align: right" appTitulos mat-header-cell *matHeaderCellDef  width="16%">Nombre</th>
-                <td style="text-align: right" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+                <th  appTitulos mat-header-cell *matHeaderCellDef  width="20%">Nombre</th>
+                <td  mat-cell *matCellDef="let element">{{ element.nombre }}</td>
                </ng-container>   
                
                <ng-container matColumnDef="apellido">
-                <th style="text-align: right" appTitulos mat-header-cell *matHeaderCellDef  width="15%">Apellido</th>
-                <td style="text-align: right" mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+                <th  appTitulos mat-header-cell *matHeaderCellDef  width="20%">Apellido</th>
+                <td  mat-cell *matCellDef="let element">{{ element.apellido }}</td>
                </ng-container>                  
     
              <ng-container matColumnDef="acciones">
-              <th appTitulos mat-header-cell *matHeaderCellDef  width="15%">Acciones</th>
+              <th appTitulos mat-header-cell *matHeaderCellDef  width="10%">Acciones</th>
               <td mat-cell *matCellDef="let element">
                   <button mat-button  color="primary" (click)="editar(element)"><mat-icon>edit</mat-icon></button>                  
               </td>
