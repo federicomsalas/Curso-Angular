@@ -39,12 +39,18 @@ export class AuthGuard implements CanActivate, CanLoad {
 
     return this.authService.obtenerSesion().pipe(
       map((sesion: Usuario) => {
+        try {
         if(sesion.id){
           localStorage.setItem('SESSION', JSON.stringify(sesion));
           return true;
         }else{
           this.router.navigate(['login']);
           return false;
+        }
+        }
+        catch {
+          this.router.navigate(['login']);
+          return false;          
         }
       })
     );
