@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar Inscripción</h1>
+<div mat-dialog-content>
+    <h3 mat-dialog-title>¿Está seguro de borrar la inscripción al curso <b>{{ data.curso.descripcion }}</b> del alumno <b>{{ data.alumno | concatenar }}</b>?</h3>
+</div>
+<div mat-dialog-actions style="display:block; text-align:right">            
+    <button mat-raised-button color="primary"  (click)="borrar()">Eliminar</button>    
+    <button mat-raised-button color="warn"(click)="onNoClick()">Cancelar</button>
+</div>

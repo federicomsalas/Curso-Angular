@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>{{ data.modo }} de Inscripción</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formulario">
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <mat-form-field appearance="fill" style="width:100%">
+                <mat-label>Curso</mat-label>
+                <mat-select formControlName="curso">
+                    <mat-option *ngFor="let curso of cursos$ | async" [value]="curso.id">
+                        {{curso.descripcion}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <p *ngIf="formulario.get('curso')?.touched && formulario.get('curso')?.errors?.['required']">Este campo es obligatorio</p>
+        </div>        
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <mat-form-field appearance="fill"  style="width:100%">
+                <mat-label>Alumno</mat-label>
+                <mat-select formControlName="alumno">
+                    <mat-option *ngFor="let alumno of alumnos$ | async" [value]="alumno.id">
+                        {{alumno | concatenar}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <p *ngIf="formulario.get('alumno')?.touched && formulario.get('alumno')?.errors?.['required']">Este campo es obligatorio</p>
+        </div> 
+  
+
+    </div>    
+
+     
+    </form>
+</div>
+<div mat-dialog-actions style="display:block; text-align:right">
+    <button mat-raised-button color="primary" [disabled]="!formulario.valid" (click)="actualizar()">Aceptar</button>
+    <button mat-raised-button color="warn"  (click)="cerrar()">Cerrar</button>    
+</div>

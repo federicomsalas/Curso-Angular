@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Seleccionar Curso</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formulario">
+
+    <div class="row">    
+
+        <div class="col-sm-12">
+        <mat-form-field appearance="fill" *ngIf="cursos$ | async as cursos">
+            <mat-label>Curso</mat-label>            
+            <mat-select matNativeControl formControlName="curso">
+                <mat-option *ngFor="let curso of cursos" [value]="curso.id">{{ curso.descripcion}}</mat-option>
+              </mat-select>          
+        </mat-form-field>
+        <p *ngIf="formulario.get('curso')?.touched && formulario.get('curso')?.errors?.['required']">Este campo es obligatorio</p>
+    </div>
+
+    </div>        
+    </form>
+</div>
+
+<div mat-dialog-actions style="display:block; text-align:right">
+    <button mat-raised-button color="primary"   [disabled]="!formulario.valid" (click)="aceptar()">Aceptar</button>
+    <button mat-raised-button color="warn"  (click)="cerrar()">Cerrar</button>    
+</div>
