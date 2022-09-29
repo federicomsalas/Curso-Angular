@@ -11,7 +11,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class InscripcionesService {
-  inscripciones: Inscripcion[] = [];
+  inscripcionSubject = new Subject<any>();
   private api=  environment.API
 
   constructor(
@@ -38,21 +38,7 @@ export class InscripcionesService {
     return this.http.delete<Inscripcion>(`${this.api}/inscripciones/${inscripcion.id}`);
   }   
 
-   validarCursoNoInscripto(id: string): boolean
-   {
-    this.inscripciones = JSON.parse(localStorage.getItem('TABLA_INSCRIPCIONES' ) || '[]') as Inscripcion[];  
-    const item = this.inscripciones.find(inscripcion => inscripcion.curso.id == id);        
-    const index = this.inscripciones.indexOf(item!);   
-    if (index >= 0)
-    {
-      alert("No se puede borrar el curso porque ya hay alumnos inscriptos en él.");
-      return false;
-    } 
-    else
-    {
-      return true;
-    }
-   }
+
  
 
 

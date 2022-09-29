@@ -8,11 +8,10 @@ import { BorrarInscripcionComponent } from '../borrar-inscripcion/borrar-inscrip
 import { Curso } from 'src/app/models/curso';
 import { Alumno } from 'src/app/models/alumno';
 import { UtilsService } from '../../../../shared/utils/utils.service';
-import { Observable, map } from 'rxjs';
+import { Observable, map, Subscription } from 'rxjs';
 import { CursosService } from '../../../cursos/services/cursos.service';
 import { AlumnosService } from '../../../alumnos/services/alumnos.service';
-import { AuthService } from '../../../../auth/services/auth.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -25,13 +24,14 @@ export class InscripcionesComponent implements OnInit {
   columnas: string[] = [];
   inscripciones$!: Observable<Inscripcion[]>;
   usuario: any;
-
+  
   constructor(
     private dialog: MatDialog,
     private inscripcionesService: InscripcionesService,
     private utilsService: UtilsService,
     private cursosService : CursosService,
-    private alumnosService : AlumnosService    
+    private alumnosService : AlumnosService,
+    private snackBar: MatSnackBar 
   ) { }
 
   ngOnInit(): void {    
@@ -44,10 +44,10 @@ export class InscripcionesComponent implements OnInit {
     {
       this.columnas = ['nombre', 'descripcion'];
     }
-    
-
     this.inscripciones$ = this.inscripcionesService.obtenerInscripciones();
+    
   }
+
 
 
   agregarInscripcion(){
@@ -72,6 +72,7 @@ export class InscripcionesComponent implements OnInit {
 
             this.inscripcionesService.agregarInscripcion(resultado).subscribe((resultado: Inscripcion) => {        
               this.ngOnInit();
+              this.snackBar.open(resultado.alumno.apellido +  ', ' + resultado.alumno.nombre +   " se inscribió  al curso de" +  resultado.curso.descripcion, "Ok", {duration: 2000}); 
             }); 
 
           });   
@@ -94,6 +95,7 @@ export class InscripcionesComponent implements OnInit {
       {
        this.inscripcionesService.eliminarInscripcion(elemento).subscribe((inscripcion: Inscripcion) => {        
         this.ngOnInit();
+        this.snackBar.open(elemento.alumno.apellido +  ', ' + elemento.alumno.nombre +   " se borró del curso " +  elemento.curso.descripcion, "Ok", {duration: 2000}); 
       });  
       }
     })    

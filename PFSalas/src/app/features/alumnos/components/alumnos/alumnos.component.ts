@@ -40,12 +40,8 @@ export class AlumnosComponent implements OnInit {
     private utilsService: UtilsService,
     private store: Store,
     private snackBar: MatSnackBar,
-    private inscripcionesService: InscripcionesService
   ) { }
 
-  // ngOnInit(): void {
-  //   this.alumnos$ = this.alumnosService.obtenerAlumnos()
-  // }
 
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('SESSION') || 'false');

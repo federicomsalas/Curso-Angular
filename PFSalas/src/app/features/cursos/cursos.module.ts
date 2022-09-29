@@ -12,8 +12,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { CursoEffects } from './state/cursos.effects';
 import { environment } from '../../../environments/environment.prod';
 
-
-
 @NgModule({
   declarations: [
     CursosComponent,

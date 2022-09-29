@@ -26,7 +26,7 @@ export class BorrarCursoComponent {
   }
 
   borrar(){      
-    this.dialogRef.close(this.inscripcionesService.validarCursoNoInscripto(this.data.id));
+    this.dialogRef.close();
   }
 
   onNoClick(): void {

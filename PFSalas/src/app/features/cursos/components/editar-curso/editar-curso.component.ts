@@ -37,7 +37,7 @@ export class EditarCursoComponent implements OnInit {
     private alumnosService : AlumnosService,
     private inscripcionesService : InscripcionesService,
     private utilsService : UtilsService,
-    private snackBar : MatSnackBar       
+    private snackBar : MatSnackBar
 
   ) {
       dialogRef.disableClose = true;    
@@ -60,13 +60,14 @@ export class EditarCursoComponent implements OnInit {
    }
 
   ngOnInit(): void {    
+
     this.inscripciones$ = this.inscripcionesService.obtenerInscripciones().pipe(
       map((inscripciones: Inscripcion[]) => {
         return inscripciones.filter(
           (i) => i.curso.id == this.curso.id
         );
       })
-    );      
+    );     
     this.inscripciones$.subscribe(result => {return this.cantidadRegistros =  result.length});         
 
   }

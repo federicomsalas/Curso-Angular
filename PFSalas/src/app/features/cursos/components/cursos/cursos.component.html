@@ -17,7 +17,7 @@
         </div>        
 
         <br>
-        
+        <ng-container *ngIf="(cursos$ | async)?.length">
         <table mat-table [dataSource]="cursos$"   class="mat-elevation-z8" style="width:100%">
             <ng-container matColumnDef="descripcion">
               <th appTitulos mat-header-cell *matHeaderCellDef  width="40%" >Descripción</th>
@@ -47,7 +47,7 @@
              <tr mat-header-row *matHeaderRowDef="columnas"></tr>    
              <tr mat-row *matRowDef="let row; columns: columnas"> </tr>    
       </table>        
-
+      </ng-container>
 
       </div>
     </section><!-- End About Section -->

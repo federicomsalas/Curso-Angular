@@ -65,10 +65,10 @@
      <tr mat-header-row *matHeaderRowDef="columnas"></tr>    
      <tr mat-row *matRowDef="let row; columns: columnas"> </tr>    
 </table> 
-</ng-container> 
+</ng-container>
 <br>
 <div mat-dialog-actions style="display:block; text-align:right">
-    <button mat-raised-button color="primary" *ngIf="usuario.admin > 0" (click)="inscribir()">Inscribir alumno</button>
+    <button mat-raised-button color="accent" *ngIf="usuario.admin > 0" (click)="inscribir()">Inscribir alumno</button>
     <button mat-raised-button color="warn"  (click)="cerrar()">Cerrar</button>    
 </div>
 </div>

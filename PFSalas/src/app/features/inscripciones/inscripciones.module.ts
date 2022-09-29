@@ -9,15 +9,13 @@ import { ListaInscripcionesComponent } from './components/lista-inscripciones/li
 import { ListaInscripcionesCursosComponent } from './components/lista-inscripciones-cursos/lista-inscripciones-cursos.component';
 
 
-
 @NgModule({
   declarations: [
     InscripcionesComponent,
     BorrarInscripcionComponent,
     EditarInscripcionComponent,
     ListaInscripcionesComponent,
-    ListaInscripcionesCursosComponent
-
+    ListaInscripcionesCursosComponent,  
   ],
   imports: [
     CommonModule,
