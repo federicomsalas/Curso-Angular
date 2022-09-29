@@ -1,3 +1,3 @@
-# 3PFSalas
+# PFSalas
 
-3PFSalas - Tercera entrega del Proyecto Final
+Entrega Final del Proyecto Final
